@@ -5,8 +5,9 @@
   line-height: 1.2;
   font-weight: 400;
 }
-
 body {
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
+  background-color: var(--cl-bg);
+  color: var(--cl-text);
 }

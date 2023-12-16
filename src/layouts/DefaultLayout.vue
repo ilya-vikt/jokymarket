@@ -1,8 +1,8 @@
 <template>
-  <JmHeader>Header</JmHeader>
-  <slot></slot>
+  <HeaderMarket />
+  <slot />
 </template>
 
 <script setup lang="ts">
-import JmHeader from '@/widgets/JmHeader.vue';
+import HeaderMarket from '@/widgets/HeaderMarket.vue';
 </script>

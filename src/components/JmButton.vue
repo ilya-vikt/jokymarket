@@ -4,7 +4,10 @@
     :to="to"
     class="jm-button"
     :class="{
-      'jm-button--vertical': vertical
+      'jm-button--vertical': vertical,
+      'jm-button--bordered': hasBorder,
+      'jm-button--has-hover': hasHover,
+      'jm-button--pushed': pushed
     }"
   >
     <component
@@ -29,6 +32,9 @@ const props = withDefaults(
     vertical?: boolean;
     iconSize?: number | string;
     to?: string;
+    hasBorder?: boolean;
+    hasHover?: boolean;
+    pushed?: boolean;
   }>(),
   {
     vertical: false,
@@ -47,7 +53,10 @@ const baseComponent = computed(() => (props.to ? RouterLink : 'button'));
   gap: 10px;
   padding: $padding-v $padding-h;
   line-height: 1;
-  transition: opacity 0.2s linear;
+  transition:
+    opacity $animation,
+    background-color $animation,
+    color $animation;
   border-radius: $border-radius;
   letter-spacing: inherit;
 
@@ -57,6 +66,16 @@ const baseComponent = computed(() => (props.to ? RouterLink : 'button'));
 
   &--vertical {
     flex-direction: column;
+  }
+
+  &--bordered {
+    border: 2px solid var(--cl-border);
+  }
+
+  &--has-hover:hover,
+  &--pushed {
+    background-color: var(--cl-hover);
+    color: var(--cl-text-hover);
   }
 }
 </style>

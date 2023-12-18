@@ -30,3 +30,8 @@ body {
   width: 100%;
   margin: 0 auto;
 }
+
+.main {
+  padding: $padding-v $padding-h;
+  padding-top: calc(var(--header-height) + $padding-v);
+}

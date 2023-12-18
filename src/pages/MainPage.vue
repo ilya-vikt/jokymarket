@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <main class="main">
     <GoodsList
       :goods-list="data"
       :cols="5"
     />
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">

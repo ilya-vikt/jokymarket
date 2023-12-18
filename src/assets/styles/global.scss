@@ -18,6 +18,10 @@ body {
   color: var(--cl-title);
 }
 
+.no-scroll {
+  overflow-y: hidden;
+}
+
 .container {
   max-width: $containerMaxWidth;
   width: 100%;

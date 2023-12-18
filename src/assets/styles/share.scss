@@ -3,3 +3,13 @@ $padding-h: 15px;
 $border-radius: 10px;
 $containerMaxWidth: 1920px;
 $animation: 250ms ease-out;
+
+%hover-effect {
+  transition:
+    background-color $animation,
+    color $animation;
+  &:hover {
+    background-color: var(--cl-hover);
+    color: var(--cl-text-hover);
+  }
+}

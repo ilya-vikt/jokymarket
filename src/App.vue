@@ -13,10 +13,4 @@ import { AppLayout } from '@/layouts/'
 
 <style lang="scss">
 @import './assets/styles/style.scss';
-
-.container {
-  max-width: 1920px;
-  width: 100%;
-  margin: 0 auto;
-}
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="header"
     class="header"
   >
     <header class="container header__container">
@@ -7,6 +8,21 @@
     </header>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { useResizeObserver } from '@vueuse/core';
+
+const header = ref(null);
+onMounted(() => {
+  useResizeObserver(header, (entries) => {
+    document.documentElement.style.setProperty(
+      '--header-height',
+      `${entries[0].contentRect.height}px`
+    );
+  });
+});
+</script>
 
 <style scoped lang="scss">
 .header {

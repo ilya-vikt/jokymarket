@@ -5,9 +5,11 @@
   line-height: 1.2;
   font-weight: 400;
   letter-spacing: 0.01em;
+  --scrollbar-compensation: 0px;
 }
 body {
   min-height: 100vh;
+  padding-right: calc(var(--scrollbar-compensation) - (100vw - 100%));
   font-family: 'Roboto', sans-serif;
   background-color: var(--cl-bg);
   color: var(--cl-text);

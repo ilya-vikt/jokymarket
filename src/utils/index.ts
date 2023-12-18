@@ -1,4 +1,4 @@
-import { setBodyScroll } from './bodyScroll';
+import { setBodyScroll, setScrollBarWidth } from './bodyScroll';
 import { priceFormatter } from './priceFormatter';
 
-export { priceFormatter, setBodyScroll };
+export { priceFormatter, setBodyScroll, setScrollBarWidth };

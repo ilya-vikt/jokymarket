@@ -1,16 +1,35 @@
 <template>
-  <header class="header"><slot /></header>
+  <div
+    class="header"
+  >
+    <header class="container header__container">
+      <slot />
+    </header>
+  </div>
 </template>
 
 <style scoped lang="scss">
 .header {
-  display: flex;
   position: fixed;
+  width: 100vw;
   top: 0;
-  width: 100%;
-  background-color: teal;
-  padding: 0 $padding-h;
-  background-color: var(--cl-block);
-  border-bottom: 1px solid var(--cl-border);
+  right: 0;
+  left: 0;
+  padding-right: var(--scrollbar-compensation);
+
+  &__container {
+    padding-left: $padding-h;
+    padding-right: $padding-h;
+    background-color: var(--cl-block);
+    border-bottom: 1px solid var(--cl-border);
+
+    @media (max-width: ($containerMaxWidth)) {
+      padding-right: calc($padding-h + var(--scrollbar-compensation));
+    }
+  }
+
+  @media (max-width: ($containerMaxWidth)) {
+    padding-right: 0;
+  }
 }
 </style>

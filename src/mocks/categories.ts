@@ -5,7 +5,7 @@ export default [
     title: 'Электроника',
     slug: 'electronics',
     id: 1,
-    subcategories: [
+    secondaryCategories: [
       {
         title: 'Ноутбуки',
         slug: 'notebooks',
@@ -38,7 +38,7 @@ export default [
     slug: 'сlothers-and-shoes',
     id: 7,
 
-    subcategories: [
+    secondaryCategories: [
       {
         title: 'Мужская одежда',
         slug: 'men-clother',
@@ -66,7 +66,7 @@ export default [
     slug: 'appliances',
     id: 12,
 
-    subcategories: [
+    secondaryCategories: [
       {
         title: 'Утюги',
         slug: 'irons',

@@ -1,18 +1,20 @@
 <template>
   <JmCard class="menu-second">
-    <p
-      v-if="mainCategoryTitle && !isLoading"
+    <component
+      :is="isCompact ? RouterLink : 'p'"
+      v-if="catalogStore.primaryTitle && !catalogStore.isLoading"
+      ref="catTitle"
+      :to="catalogStore.primaryHref"
       class="menu-second__category"
     >
-      {{ mainCategoryTitle }}
-    </p>
-
+      {{ catalogStore.primaryTitle }}
+    </component>
     <ul
-      v-if="!isLoading"
+      v-if="!catalogStore.isLoading"
       class="menu-second__list"
     >
       <li
-        v-for="category in goodsCategories"
+        v-for="category in catalogStore.secondaryCategories"
         :key="category.slug"
         class="menu-second__item"
       >
@@ -27,11 +29,10 @@
         </RouterLink>
       </li>
     </ul>
-
     <SceletonLoader
       v-else
-      :block-count="12"
-      :cols="4"
+      :block-count="cols"
+      :cols="cols"
       block-height="200px"
       grid
     />
@@ -41,26 +42,46 @@
 <script setup lang="ts">
 import JmCard from '@/components/JmCard.vue';
 import SceletonLoader from '@/blocks/SceletonLoader.vue';
-import type { SubGoodsCategory } from '@/types/goodsCategories';
+import { useResizeObserver } from '@vueuse/core';
+import { onMounted, ref } from 'vue';
+import { useCatalogStore } from '@/stores/catalogStore';
+import { RouterLink } from 'vue-router';
 
 defineProps<{
-  goodsCategories: SubGoodsCategory[];
-  mainCategoryTitle: string;
-  isLoading: boolean;
+  isCompact: boolean;
+  cols: number;
 }>();
+
+const catalogStore = useCatalogStore();
+
+//We need to know a height of the primary title to calc a height of the list to make scroll
+//
+const catTitle = ref(null);
+const catTitleHeight = ref('0px');
+onMounted(() => {
+  useResizeObserver(catTitle, (entries) => {
+    catTitleHeight.value = `${entries[0].contentRect.height}px`;
+  });
+});
 </script>
 
 <style scoped lang="scss">
 .menu-second {
+  position: relative;
+
   &__category {
     font-size: 2rem;
     margin-bottom: $padding-v;
+    display: block;
+    max-width: calc(100% - 120px);
   }
-  &__list,
-  &__loader {
+
+  &__list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(v-bind(cols), 1fr);
     gap: 10px;
+    max-height: calc(100% - $padding-v - v-bind(catTitleHeight));
+    overflow-y: auto;
   }
 
   &__link {
@@ -86,5 +107,9 @@ defineProps<{
   &__img {
     width: 50%;
   }
+}
+
+.is-mobile .menu-second {
+  border-radius: 0;
 }
 </style>

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { useMediaQuery } from '@vueuse/core';
+import { ref } from 'vue';
 
 export const useGlobalStore = defineStore('globalStore', () => {
   const isMobile = useMediaQuery('(max-width: 639px)');
@@ -8,11 +9,15 @@ export const useGlobalStore = defineStore('globalStore', () => {
   const isDesktop = useMediaQuery('(min-width: 1280px)');
   const isCompact = useMediaQuery('(max-width: 1024px)');
 
+  const catalogOpened = ref(false);
+  const droverOpened = ref(false);
   return {
     isDesktop,
     isLaptop,
     isTablet,
     isMobile,
-    isCompact
+    isCompact,
+    catalogOpened,
+    droverOpened
   };
 });

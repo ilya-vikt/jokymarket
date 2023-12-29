@@ -1,49 +1,45 @@
 import { defineStore } from 'pinia';
-import { computed, ref, watchEffect } from 'vue';
+import { computed, ref, watch, watchEffect } from 'vue';
 import categories from '@/mocks/categories';
 import { setBodyScroll } from '@/utils';
-import type { GoodsCategory, MainGoodsCategory, SubGoodsCategory } from '@/types/goodsCategories';
+import type { GoodsCategory, SecondaryCategory } from '@/types/goodsCategories';
 
 export const useCatalogStore = defineStore('catalog', () => {
   const isLoading = ref(true);
   const opened = ref(false);
   const catalog = ref<GoodsCategory[]>([]);
+  const stage = ref<'primary' | 'secondary'>('primary');
 
-  const mainCategories = computed<MainGoodsCategory[]>(() => {
-    if (catalog.value.length === 0) return [];
-    else return catalog.value.map((el) => ({ title: el.title, slug: el.slug, id: el.id }));
-  });
-
-  const selectedMainId = ref<number | null>(catalog.value[0]?.id || null);
-
-  //util
-  const findCategory = () =>
-    selectedMainId.value ? catalog.value.find((el) => el.id === selectedMainId.value) : null;
-
-  const subCategories = computed<SubGoodsCategory[]>(() => findCategory()?.subcategories || []);
-
-  const selectedMainTitle = computed(() => findCategory()?.title || '');
+  const primaryCategory = ref<GoodsCategory | null>(catalog.value[0] || null);
+  const primaryTitle = computed(() => primaryCategory.value?.title || '');
+  const primaryHref = computed(() => primaryCategory.value?.slug || '');
+  const secondaryCategories = computed<SecondaryCategory[]>(
+    () => primaryCategory.value?.secondaryCategories || []
+  );
 
   watchEffect(() => {
-    setBodyScroll(!opened.value);
+    if (!opened.value) {
+      stage.value = 'primary';
+      primaryCategory.value = catalog.value[0] || null;
+    }
   });
 
-  setTimeout(
-    () => (
-      (catalog.value = categories),
-      (isLoading.value = false),
-      (selectedMainId.value = catalog.value[0].id)
-    ),
-    1000
-  );
+  watchEffect(() => (primaryCategory.value = catalog.value[0] || null));
+  watchEffect(() => setBodyScroll(!opened.value));
+
+  setTimeout(() => {
+    catalog.value = categories;
+    isLoading.value = false;
+  }, 1000);
 
   return {
     isLoading,
     catalog,
-    mainCategories,
-    selectedMainId,
-    subCategories,
-    selectedMainTitle,
-    opened
+    primaryHref,
+    secondaryCategories,
+    primaryCategory,
+    primaryTitle,
+    opened,
+    stage
   };
 });

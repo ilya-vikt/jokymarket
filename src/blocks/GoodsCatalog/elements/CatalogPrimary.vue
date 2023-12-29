@@ -1,46 +1,50 @@
 <template>
-  <JmCard>
+  <JmCard class="menu-main">
     <SceletonLoader
-      v-if="isLoading"
+      v-if="catalogStore.isLoading"
       :block-count="5"
     />
-    <ul
-      v-else
-      class="menu-main"
-    >
+    <ul v-else>
       <li
-        v-for="category in goodsCategories"
+        v-for="category in catalogStore.catalog"
         :key="category.id"
         class="menu-main__item"
       >
-        <RouterLink
-          :to="category.slug"
+        <component
+          :is="isCompact ? 'button' : RouterLink"
+          :to="catalogStore.primaryHref"
           :class="{
-            'menu-main__link--selected': category.id === selectedCategory
+            'menu-main__link--selected': category.id === catalogStore.primaryCategory?.id
           }"
           class="menu-main__link"
-          @pointerenter="emit('update:selectedCategory', category.id)"
+          @pointerenter="selectHandler(category, 'hover')"
+          @click="selectHandler(category, 'click')"
           >{{ category.title }}
-        </RouterLink>
+        </component>
       </li>
     </ul>
   </JmCard>
 </template>
 
 <script setup lang="ts">
+import type { GoodsCategory } from '@/types/goodsCategories';
 import JmCard from '@/components/JmCard.vue';
-import type { MainGoodsCategory } from '@/types/goodsCategories';
 import SceletonLoader from '@/blocks/SceletonLoader.vue';
+import { RouterLink } from 'vue-router';
+import { useCatalogStore } from '@/stores/catalogStore';
 
-defineProps<{
-  goodsCategories: MainGoodsCategory[];
-  selectedCategory: number | null;
-  isLoading: boolean;
+const props = defineProps<{
+  isCompact: boolean;
 }>();
 
-const emit = defineEmits<{
-  'update:selectedCategory': [selectedCategory: number];
-}>();
+const catalogStore = useCatalogStore();
+
+const selectHandler = (category: GoodsCategory, e: 'hover' | 'click') => {
+  if ((props.isCompact && e === 'click') || (!props.isCompact && e === 'hover')) {
+    catalogStore.primaryCategory = category;
+    catalogStore.stage = 'secondary';
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -59,5 +63,9 @@ const emit = defineEmits<{
       color: var(--cl-text-hover);
     }
   }
+}
+
+.is-mobile .menu-main {
+  border-radius: 0;
 }
 </style>

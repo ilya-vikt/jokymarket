@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="baseComponent"
+    :is="to ? RouterLink : 'button'"
     :to="to"
     class="jm-button"
     :class="{
@@ -41,8 +41,11 @@ const props = withDefaults(
     iconSize: '1em'
   }
 );
-
-const baseComponent = computed(() => (props.to ? RouterLink : 'button'));
+const justify = computed(() => {
+  if (props.justify === 'left') return 'flex-start';
+  if (props.justify === 'right') return 'flex-end';
+  return 'center';
+});
 </script>
 
 <style scoped lang="scss">

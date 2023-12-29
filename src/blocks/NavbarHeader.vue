@@ -7,6 +7,7 @@
         :icon-size="24"
         to="/"
         vertical
+        has-hover
       >
         Доставки
       </JmButton>
@@ -18,6 +19,7 @@
         :icon-size="24"
         to="/"
         vertical
+        has-hover
       >
         Избранное
       </JmButton>
@@ -29,6 +31,7 @@
         :icon-size="24"
         to="/"
         vertical
+        has-hover
       >
         Профиль
       </JmButton>
@@ -40,6 +43,7 @@
         :icon-size="24"
         vertical
         to="/"
+        has-hover
       >
         Корзина
       </JmButton>
@@ -68,15 +72,5 @@ import { ParcelIcon, HeartIcon, UserIcon, CartIcon, InfoIcon } from '@/component
 .header-navbar {
   display: flex;
   gap: 10px;
-
-  &__btn {
-    transition:
-      background-color $animation,
-      color $animation;
-    &:hover {
-      background-color: var(--cl-hover);
-      color: var(--cl-text-hover);
-    }
-  }
 }
 </style>

@@ -17,7 +17,10 @@
       :height="iconSize"
       class="jm-button__icon"
     />
-    <span class="jm-button__content">
+    <span
+      v-if="$slots.default"
+      class="jm-button__content"
+    >
       <slot />
     </span>
   </component>

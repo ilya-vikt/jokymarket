@@ -78,10 +78,12 @@ const justify = computed(() => {
     border: 2px solid var(--cl-border);
   }
 
-  &--has-hover:hover,
   &--pushed {
-    background-color: var(--cl-hover);
-    color: var(--cl-text-hover);
+    @extend %hover-effect;
+  }
+
+  &--has-hover {
+    @include mouse-hover-effect;
   }
 }
 </style>

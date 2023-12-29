@@ -53,7 +53,7 @@ const emit = defineEmits<{
     padding: 10px;
     flex-grow: 1;
     border-radius: 5px;
-    @extend %hover-effect;
+    @include mouse-hover-effect;
 
     &--selected {
       color: var(--cl-text-hover);

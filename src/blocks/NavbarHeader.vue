@@ -44,12 +44,24 @@
         Корзина
       </JmButton>
     </li>
+    <li>
+      <JmButton
+        class="header-navbar__btn"
+        :icon="InfoIcon"
+        :icon-size="24"
+        vertical
+        to="/"
+        has-hover
+      >
+        О проекте
+      </JmButton>
+    </li>
   </ul>
 </template>
 
 <script setup lang="ts">
 import JmButton from '@/components/JmButton.vue';
-import { ParcelIcon, HeartIcon, UserIcon, CartIcon } from '@/components/icons';
+import { ParcelIcon, HeartIcon, UserIcon, CartIcon, InfoIcon } from '@/components/icons';
 </script>
 
 <style scoped lang="scss">

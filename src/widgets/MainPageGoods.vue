@@ -1,8 +1,5 @@
 <template>
-  <ul
-    :style="listDynamicStyles"
-    class="goods-list"
-  >
+  <ul class="goods-list">
     <li
       v-for="goods in goodsList"
       :key="goods.id"
@@ -26,21 +23,26 @@
 import GoodsCard from '@/blocks/GoodsCard.vue';
 import type { GoodsCardDto } from '@/types/goodsCard';
 import { computed } from 'vue';
+import { useGlobalStore } from '@/stores/globalStore';
 
-const props = defineProps<{
+defineProps<{
   goodsList: GoodsCardDto[];
-  cols: number;
 }>();
 
-const listDynamicStyles = computed(() => ({
-  'grid-template-columns': `repeat(${props.cols}, 1fr)`
-}));
+const globalStore = useGlobalStore();
+
+const colsCount = computed(() => {
+  if (globalStore.isDesktop) return 4;
+  if (globalStore.isLaptop) return 3;
+  if (globalStore.isTablet) return 2;
+  return 1; //mobile
+});
 </script>
 
 <style scoped lang="scss">
 .goods-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(v-bind(colsCount), 1fr);
   gap: 15px;
 
   &__card {

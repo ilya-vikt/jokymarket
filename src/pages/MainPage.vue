@@ -1,6 +1,6 @@
 <template>
   <main class="main">
-    <GoodsList
+    <MainPageGoods
       :goods-list="data"
       :cols="5"
     />
@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import GoodsList from '@/widgets/GoodsList.vue';
+import MainPageGoods from '@/widgets/MainPageGoods.vue';
 import goodsData from '@/mocks/goods';
 
 const data = goodsData;

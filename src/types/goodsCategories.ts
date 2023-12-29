@@ -1,15 +1,15 @@
-export type SubGoodsCategory = {
+export type SecondaryCategory = {
   id: number;
   slug: string;
   title: string;
 };
 
-export type MainGoodsCategory = {
+export type PrimaryCategory = {
   id: number;
   title: string;
   slug: string;
 };
 
-export type GoodsCategory = MainGoodsCategory & {
-  subcategories: SubGoodsCategory[];
+export type GoodsCategory = PrimaryCategory & {
+  secondaryCategories: SecondaryCategory[];
 };

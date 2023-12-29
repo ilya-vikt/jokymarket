@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="baseComponent"
+    :is="to ? RouterLink : 'button'"
     :to="to"
     class="jm-button"
     :class="{
@@ -17,7 +17,10 @@
       :height="iconSize"
       class="jm-button__icon"
     />
-    <span class="jm-button__content">
+    <span
+      v-if="$slots.default"
+      class="jm-button__content"
+    >
       <slot />
     </span>
   </component>
@@ -35,24 +38,27 @@ const props = withDefaults(
     hasBorder?: boolean;
     hasHover?: boolean;
     pushed?: boolean;
+    justify?: 'left' | 'center' | 'right';
   }>(),
   {
     vertical: false,
     iconSize: '1em'
   }
 );
-
-const baseComponent = computed(() => (props.to ? RouterLink : 'button'));
+const justify = computed(() => {
+  if (props.justify === 'left') return 'flex-start';
+  if (props.justify === 'right') return 'flex-end';
+  return 'center';
+});
 </script>
 
 <style scoped lang="scss">
 .jm-button {
   display: flex;
-  justify-content: center;
+  justify-content: v-bind(justify);
   align-items: center;
   gap: 10px;
   padding: $padding-v $padding-h;
-  line-height: 1;
   transition:
     opacity $animation,
     background-color $animation,
@@ -72,10 +78,12 @@ const baseComponent = computed(() => (props.to ? RouterLink : 'button'));
     border: 2px solid var(--cl-border);
   }
 
-  &--has-hover:hover,
   &--pushed {
-    background-color: var(--cl-hover);
-    color: var(--cl-text-hover);
+    @extend %hover-effect;
+  }
+
+  &--has-hover {
+    @include mouse-hover-effect;
   }
 }
 </style>
